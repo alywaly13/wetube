@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+      <div align = "center">
+<div class="content-box" style="width:70%">
+
+   <% include partials/head %>
+   <body>
+      <% include partials/header %>
+      <br><br>
+      <h1><%=currentUser %>'s profile</h1> <br>
+    <div class="profile">
+      <img class="profile" src="/images/user/<%=currentUser%>.jpg">
+      <div class="outer">
+        <span class="profile">Change Picture</span>
+      </div>
+    </div>
+    <br>
+    <div id="pictureModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">      
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">X</button>
+            <h2>Upload a New Profile Picture</h2> 
+          </div>
+          <div class="modal-body">
+            <p>Preview:</p>
+            <img id="profilePreview" src="/images/user/<%=currentUser%>.jpg" width="200" height="200">
+          </div>
+          <div class="modal-footer">
+            <form id="uploadForm" enctype="multipart/form-data">
+              <input type="file" name="file">
+              <button class="btn btn-default" type="button" id="uploadPreview">Preview!</button>
+              <button class="btn btn-default" type="button" id="uploadSubmit">Upload!</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="searchModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">      
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">X</button>
+            <h2>Search Results</h2> 
+          </div>
+          <div class="modal-body">
+            <div id="search-results" style="height: 500px; overflow: auto"></div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+    <p> ("Click" me above to upload a new one!) </p>
+        <table id="searchtable"><br>
+            <button class="btn btn-default" onclick="location.href='<%=authlink%>'" id="spotify-auth">Import tracks from my Spotify playlists</button> 
+            <h3><i>~OR~</i></h3>
+            <tr>
+            <td><br><br>
+                <p><b>Add a favorite song below!</b></p>
+                <form class="form-inline" id="search-song-form">
+                  <div class="form-group">
+                    <label for="search">Title: </label>
+                    <input type="text" id="search-song-input" class="form-control">
+                  </div>
+                  <button type="submit" class="btn btn-default">Search</button>
+                </form>
+                <div class="error" id="song-error"></div>
+
+                <!--<div> Title : <input type="text" id="search-song-input"> </div>
+                <br>
+                <div class="error" id="song-error"></div>
+                <div> <button id="search-song-btn" class="btn btn-default">Search for Song</button></div><br>-->
+            </td>
+            <td><br><br>
+                <p><b>Add a favorite artist below!</b></p>
+                <!--<div> Name : <input type="text" id="search-artist-input"> </div>
+                <br>
+                <div class="error" id="artist-error"></div>
+                <div> <button id="search-artist-btn" class="btn btn-default">Search for Artist</button></div><br>-->                <form class="form-inline" id="search-artist-form">
+                  <div class="form-group">
+                    <label for="search">Name: </label>
+                    <input type="text" id="search-artist-input" class="form-control">
+                  </div>
+                  <button type="submit" class="btn btn-default">Search</button>
+                </form>
+                  <div class="error" id="artist-error"></div>
+
+            </td>
+          </tr> 
+
+          <tr>
+              <td><h3>Songs I love: </h3><br>
+              </td> 
+              <td><h3>Artists I love: </h3><br>
+              </td>
+          </tr>
+         <tr>
+            <td>
+               <div id="mySongs">
+                  <% if(songs.length > 0){ %>
+                  <ol style="height: 250px; overflow: auto">
+                     <% for(var i=0; i<songs.length; i++) {%>
+                     <li data-id="<%=songs[i].id%>">
+                        <div class="liked" data-id="<%=songs[i].id%>">
+                        <image class="artistImage" src=<%=songs[i].albumArtUrl%>></image>
+                        <button class="remove-song btn btn-default" id="remove-<%=songs[i].id%>">Remove</button>
+                        <%= songs[i].title%> by <%= songs[i].artists %>
+                         </div>
+                     </li>
+                     <% } %>
+                  </ol>
+                  <% } else{ %>  
+                  <p style="font-size:120%;"><b>No liked songs yet!</b></p>
+                  <% } %>
+               </div>
+            </td>
+            <td>
+               <div id="myArtists">
+                  <% if(artists.length > 0){ %>
+                  <ol style="height: 250px; overflow: auto">
+                     <% for(var i=0; i<artists.length; i++) {%>
+                     <li>
+                     <div class="liked" data-id="<%=artists[i].id%>">
+                         <image class="artistImage" src=<%=artists[i].imageUrl%>></image>
+                      <button class="remove-artist btn btn-default" id="remove-<%=artists[i].id%>">Remove</button>
+                        <%= artists[i].name %> 
+                    </div>
+                     </li>
+                     <% } %>
+                  </ol>
+                  <% } else{ %>  
+                  <p style="font-size:120%;"><b>No liked artists yet!</b></p>
+                  <% } %>
+               </div>
+            </td>
+         </tr> 
+
+         
+      </table>
+     <div> 
+    <br><br>
+    <button class="btn btn-default" id="back-main-btn">Back to Main Page</button>
+  </div>
+   </body>
+ </div>
+</div>
+</html>

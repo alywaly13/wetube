@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<div id="content-box">
+    <div align = "center">
+    <% include partials/head %>
+    <div class="content-box" style="width:70%">
+    <script src="/javascripts/gathering.js"></script>
+
+    <body id="gathering-body">
+        <% include partials/header %>
+        <h1>Gathering <i><%=gatheringName %></i></h1><br>
+        <div class="profile">
+      <img class="profile" src="/images/user/<%=currentUser%>.jpg">
+        </div><br>
+        <p style="font-size:120%;"><b><mark>Host : <%=host %></mark></b></p>
+        <input type="hidden" name="key" value="<%=key%>" />
+		<p style="font-size:120%;"><b><mark>Key : "<%=key %>"</mark></b></p><br>
+        <div class="error"></div>
+        <div id="queuedSongs">
+            <h3><ins>Queued Songs: </ins></h3><br>
+            <ol>
+			<% for(var i=0; i<queuedSongs.length; i++) {%>
+			   <li><%= queuedSongs[i].title %> by <%= queuedSongs[i].artists %></li>
+			<% } %>
+			</ol>
+        </div>
+        <br><br>
+        <div id="holderdiv" clas="iframe_wrap">
+        <iframe src="https://embed.spotify.com/?uri=spotify:trackset:WeTube:<%=trackids%>" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>            
+        <div id="testframe"></div>
+        </div>
+        <br><br>
+        <button class="btn btn-default" id="rechoose-songs-btn">Rechoose songs</button>
+        
+        <button class="btn btn-default" id="members-btn">View Members</button>
+        <div id="membersModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">X</button>
+                        <h2>Members in "<%=gatheringName %>"</h2>
+                    </div>
+                    <div class="modal-body">
+                      <table>
+                        <% for(var i=0; i<members.length; i++) { %>
+                            <tr>
+                                <td><img src="/images/user/<%=members[i]%>.jpg" width="60" height="60"></td>
+                                <td><%= members[i] %></td>
+                            </tr>
+                        <% } %>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                        <p>Invite more friends! <br>Send an invitation link to their email. </p>
+                        <input type="text" name="invitee"/>
+                        <button class="btn btn-default" type="button" id="gathering-invite">Invite!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<%if (currentUser === host) { %>
+			<button class="btn btn-default" id="end-gathering-btn">End My Gathering</button><br>
+		<% } %>
+        <br>
+		<button class="btn btn-default" id="back-main-btn">Back to Main Page</button>
+        </div>   
+    </body>
+</div>
+</html>
